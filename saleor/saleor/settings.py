@@ -257,8 +257,7 @@ INSTALLED_APPS = [
     "django_filters",
     "phonenumber_field",
     # Eschool apps
-    "eschool.test_app",
-    "eschool.test_app1",
+    "eschool.school_profile",
 ]
 
 
@@ -386,7 +385,7 @@ TEST_RUNNER = "tests.runner.PytestTestRunner"
 
 PLAYGROUND_ENABLED = get_bool_from_env("PLAYGROUND_ENABLED", True)
 
-ALLOWED_HOSTS = get_list(os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1"))
+ALLOWED_HOSTS = get_list(os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,0.0.0.0"))
 ALLOWED_GRAPHQL_ORIGINS = os.environ.get("ALLOWED_GRAPHQL_ORIGINS", "*")
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

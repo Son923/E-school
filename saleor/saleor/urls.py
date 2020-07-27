@@ -20,8 +20,8 @@ urlpatterns = [
         name="digital-product",
     ),
     # Eschool urls
-    path('test-app/', include('eschool.test_app.urls')),
-    path('test-app1/', include('eschool.test_app1.urls')),
+    # path('test-app/', include('eschool.test_app.urls')),
+    path('webhooks/', include('eschool.school_profile.urls')),
 ]
 
 if settings.DEBUG:

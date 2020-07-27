@@ -1,3 +1,3 @@
-app_token = "kR0q17JhFSTASYu6uvOVzhkQeY6DLe"
-app_id = "QXBwOjI="
-app_name = "Test app"
+app_token = "vaFgFKk0R3BT0kLmfwOuDrcEgfuPbd"
+app_id = "QXBwOjE="
+app_name = "SerAccount"
