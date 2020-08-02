@@ -1,20 +1,26 @@
 from django.db import models
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-# Create your models here.
-# class Profile(models.Models):
-#     user = models.OneToOneField(User,on_delete=models.CASCADE)
-#     bio = models.CharField(max_length=200, blank=True, null=True)
-#     profile_pic = models.ImageField(default='default.png', upload_to = 'profile_pics')
-#     is_teacher = models.BooleanField(default=False)
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="profile", on_delete=models.CASCADE)
+    bio = models.CharField(max_length=200, blank=True, null=True)
+    birth_date = models.DateField(null=True, blank=True)
+    is_student = models.BooleanField()
+    is_teacher = models.BooleanField(default=False)
+    full_name = models.CharField(max_length=200, blank=True, null=True)
 
-#     def __str__(self):
-#         return self.user.username + ' Profile'
+    def __str__(self):
+        return self.user.username + ' Profile'
 
-#     def save(self, *args, **kwargs):
-#         super().save(*args, **kwargs)
 
-#         img = Image.open(self.profile_pic.path)
-#         if img.height >100 or img.width>100:
-#             output_size = (200,200)
-#             img.thumbnail(output_size)
-#             img.save(self.profile_pic.path)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        full_name = f"{instance.first_name} {instance.last_name}"
+        Profile.objects.create(user=instance, full_name=full_name)
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
